@@ -5,6 +5,7 @@ import { desc, eq } from 'drizzle-orm';
 import { db } from '@/src/db';
 import { projectPhotos } from '@/src/db/schema';
 import {
+  getSupabaseProjectUrl,
   logAdminSecurityActivity,
   validateAdminRequestSession,
 } from '@/src/lib/server-auth';
@@ -256,6 +257,33 @@ export async function POST(req: NextRequest) {
 
     await fs.mkdir(path.dirname(absoluteFilePath), { recursive: true });
     await fs.writeFile(absoluteFilePath, fileBuffer);
+
+    const supabaseServerKey =
+      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (
+      supabaseServerKey &&
+      supabaseServerKey !== 'your-supabase-service-role-key-server-only' &&
+      supabaseServerKey !== 'your-supabase-anon-key'
+    ) {
+      try {
+        const sbUrl = getSupabaseProjectUrl();
+        await fetch(
+          `${sbUrl}/storage/v1/object/${STORAGE_BUCKET_NAME}/${storagePath}`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${supabaseServerKey}`,
+              apikey: supabaseServerKey,
+              'Content-Type': mimeType,
+              'x-upsert': 'true',
+            },
+            body: new Uint8Array(fileBuffer),
+          }
+        );
+      } catch {
+        // Local storage copy remains primary fallback if external network call fails
+      }
+    }
 
     const dbCategory = mapDocCategoryToDbEnum(documentationCategory);
     const encodedCaption = encodePhotoCaptionWithMetadata({

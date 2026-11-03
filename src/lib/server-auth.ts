@@ -18,6 +18,13 @@ export function getExpectedAdminPassword(): string {
   return process.env.ADMIN_DEFAULT_PASSWORD || 'ZipblindAdmin2026!';
 }
 
+export function getSupabaseProjectUrl(): string {
+  return (
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    'https://tdmivjmxkcljkaskqggw.supabase.co'
+  ).replace(/\/+$/, '');
+}
+
 /**
  * Memastikan akun Administrator utama terdaftar di tabel public.admins.
  */

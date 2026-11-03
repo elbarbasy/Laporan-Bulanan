@@ -13,6 +13,7 @@ import {
   ensureDefaultAdminsSeeded,
   getExpectedAdminPassword,
   getServerSessionSecret,
+  getSupabaseProjectUrl,
   logAdminSecurityActivity,
 } from '@/src/lib/server-auth';
 
@@ -146,9 +147,33 @@ export async function POST(req: NextRequest) {
       const expectedPass = getExpectedAdminPassword();
       const inputBuf = Buffer.from(password, 'utf8');
       const expectedBuf = Buffer.from(expectedPass, 'utf8');
-      const isPasswordValid =
+      let isPasswordValid =
         inputBuf.length === expectedBuf.length &&
         crypto.timingSafeEqual(inputBuf, expectedBuf);
+
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      if (
+        !isPasswordValid &&
+        supabaseAnonKey &&
+        supabaseAnonKey !== 'your-supabase-anon-key'
+      ) {
+        try {
+          const sbUrl = getSupabaseProjectUrl();
+          const sbRes = await fetch(`${sbUrl}/auth/v1/token?grant_type=password`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: supabaseAnonKey,
+            },
+            body: JSON.stringify({ email: normalizedEmail, password }),
+          });
+          if (sbRes.ok) {
+            isPasswordValid = true;
+          }
+        } catch {
+          // Fallback to server-side password check if external network call fails
+        }
+      }
 
       if (!isPasswordValid) {
         return NextResponse.json(
