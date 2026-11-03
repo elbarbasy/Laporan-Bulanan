@@ -1,0 +1,6 @@
+{
+  "name": "ZIPBLIND Management System",
+  "description": "Sistem manajemen operasional jadwal teknisi, proyek, aktivitas pekerjaan, dokumentasi, monitoring, rekap, laporan bulanan, dan dashboard pimpinan ZIPBLIND.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

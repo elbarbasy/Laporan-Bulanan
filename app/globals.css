@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-jakarta), 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+  --zb-font-family: var(--font-jakarta), 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  font-family: var(--zb-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  color: #102B50;
+}
+
+/* Global Typography Hierarchy Utilities */
+.zb-page-title {
+  font-family: var(--zb-font-family);
+  font-size: clamp(30px, 2.4vw, 34px);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+.zb-banner-title {
+  font-family: var(--zb-font-family);
+  font-size: clamp(30px, 2.5vw, 36px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.zb-section-title {
+  font-family: var(--zb-font-family);
+  font-size: clamp(20px, 1.6vw, 22px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.zb-card-title {
+  font-family: var(--zb-font-family);
+  font-size: clamp(16px, 1.25vw, 18px);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.zb-kpi-number {
+  font-family: var(--zb-font-family);
+  font-size: clamp(32px, 2.6vw, 38px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.zb-body-text {
+  font-family: var(--zb-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.zb-desc-text {
+  font-family: var(--zb-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.zb-sidebar-text {
+  font-family: var(--zb-font-family);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.zb-btn-text {
+  font-family: var(--zb-font-family);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.zb-table-label {
+  font-family: var(--zb-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.bg-gradient-ocean-blue {
+  background: linear-gradient(135deg, #102B50 0%, #2368B5 55%, #54BDEB 100%);
+}
+
+.bg-gradient-royal-blue {
+  background: linear-gradient(135deg, #243B83 0%, #6278D9 55%, #A7B8FF 100%);
+}
+
+.bg-gradient-fresh-teal {
+  background: linear-gradient(135deg, #087F8C 0%, #20B9A4 55%, #9AE6D5 100%);
+}
+
+.bg-gradient-steel-blue {
+  background: linear-gradient(135deg, #24364E 0%, #536B8A 55%, #9BAFC7 100%);
+}
+
